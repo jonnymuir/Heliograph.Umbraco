@@ -1,8 +1,10 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Heliograph.Umbraco/Heliograph.Umbraco.csproj" />
+    <Project Path="src/Heliograph.Umbraco.ReferenceApp/Heliograph.Umbraco.ReferenceApp.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Heliograph.Umbraco.IntegrationTests/Heliograph.Umbraco.IntegrationTests.csproj" />
     <Project Path="tests/Heliograph.Umbraco.Tests/Heliograph.Umbraco.Tests.csproj" />
   </Folder>
 </Solution>

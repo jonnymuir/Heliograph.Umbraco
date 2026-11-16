@@ -480,3 +480,12 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# The backoffice client's build output, made by `npm run build` in src/Heliograph.Umbraco.Client.
+src/Heliograph.Umbraco/wwwroot/dist/
+
+# What Umbraco writes when the reference site runs.
+src/Heliograph.Umbraco.ReferenceApp/umbraco/
+src/Heliograph.Umbraco.ReferenceApp/wwwroot/media/
+src/Heliograph.Umbraco.ReferenceApp/appsettings.Local.json
+src/Heliograph.Umbraco.ReferenceApp/appsettings-schema*.json

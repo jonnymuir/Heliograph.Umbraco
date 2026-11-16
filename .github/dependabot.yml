@@ -22,9 +22,14 @@ updates:
     groups:
       actions:
         patterns: ["*"]
-  # Add an npm entry per client directory, for example:
-  # - package-ecosystem: npm
-  #   directory: "/src/Heliograph.Umbraco.Client"
-  #   schedule: { interval: weekly, day: monday }
-  #   cooldown: { default-days: 7 }
-  #   groups: { npm: { patterns: ["*"], update-types: ["minor", "patch"] } }
+  - package-ecosystem: npm
+    directory: "/src/Heliograph.Umbraco.Client"
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      backoffice-client:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]

@@ -23,4 +23,4 @@ jobs:
       pull-requests: write
     with:
       solution: Heliograph.Umbraco.slnx
-      # node-build: '["src/Heliograph.Umbraco.Client"]'
+      node-build: '["src/Heliograph.Umbraco.Client"]'

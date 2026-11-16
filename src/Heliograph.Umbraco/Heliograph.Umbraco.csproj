@@ -1,8 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
+    <!-- wwwroot/dist is the client build's output and is not committed. The items below name what ships, so the
+         SDK's own search for content is turned off to stop it finding the same files twice. -->
+    <EnableDefaultContentItems>false</EnableDefaultContentItems>
     <PackageId>Heliograph.Umbraco</PackageId>
     <Title>Heliograph.Umbraco</Title>
     <Version>0.0.0</Version>
@@ -14,11 +18,33 @@
     <RepositoryType>git</RepositoryType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <!-- Umbraco's backoffice looks for App_Plugins/{name}/umbraco-package.json. -->
+    <StaticWebAssetBasePath>App_Plugins/Heliograph</StaticWebAssetBasePath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Api.Management" />
+    <PackageReference Include="Umbraco.Cms.Core" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="/" />
     <None Include="../../LICENSE" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <!-- The manifest the backoffice discovers, and the client build it points at. -->
+  <ItemGroup>
+    <Content Include="wwwroot/umbraco-package.json">
+      <Pack>true</Pack>
+      <PackagePath>staticwebassets/umbraco-package.json</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="wwwroot/dist/**" Exclude="wwwroot/dist/**/*.map">
+      <Pack>true</Pack>
+      <PackagePath>staticwebassets/%(RecursiveDir)%(Filename)%(Extension)</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
