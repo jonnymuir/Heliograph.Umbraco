@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <PackageId>Heliograph.Umbraco</PackageId>
+    <Title>Heliograph.Umbraco</Title>
+    <Version>0.0.0</Version>
+    <Authors>Jonny Muir</Authors>
+    <Description>Hosts Heliograph in Umbraco: correspondence written in your own word processor, checked and published in the backoffice, stored in the Umbraco database and rendered for post, PDF, email and text. Rendering only; delivery belongs to the site.</Description>
+    <PackageTags>Umbraco;umbraco-marketplace;Correspondence;Email;SMS;PDF;Templates</PackageTags>
+    <PackageProjectUrl>https://github.com/jonnymuir/Heliograph.Umbraco</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jonnymuir/Heliograph.Umbraco</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="../../LICENSE" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+</Project>
