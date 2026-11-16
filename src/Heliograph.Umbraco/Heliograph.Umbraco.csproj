@@ -7,7 +7,7 @@
     <Title>Heliograph.Umbraco</Title>
     <Version>0.0.0</Version>
     <Authors>Jonny Muir</Authors>
-    <Description>Hosts Heliograph in Umbraco: correspondence templates authored in the backoffice, stored in the Umbraco database and rendered for email, SMS, messaging, PDF and print. Rendering only; delivery belongs to the site.</Description>
+    <Description>Hosts Heliograph in Umbraco: correspondence written in your own word processor, checked and published in the backoffice, stored in the Umbraco database and rendered for post, PDF, email and text. Rendering only; delivery belongs to the site.</Description>
     <PackageTags>Umbraco;umbraco-marketplace;Correspondence;Email;SMS;PDF;Templates</PackageTags>
     <PackageProjectUrl>https://github.com/jonnymuir/Heliograph.Umbraco</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jonnymuir/Heliograph.Umbraco</RepositoryUrl>

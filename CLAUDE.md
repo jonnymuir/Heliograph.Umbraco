@@ -3,15 +3,16 @@
 ## What this is
 
 `Heliograph.Umbraco` hosts [Heliograph](https://github.com/jonnymuir/Heliograph) in Umbraco v17.
-Content designers author correspondence templates in the backoffice; the package stores them in
-the Umbraco database, carries them between environments with uSync, and renders them through the
-Heliograph engine for email, SMS, messaging, PDF and print.
+Content designers write correspondence in their own word processor, then upload, check, preview
+and publish it in the backoffice. The package stores it in the Umbraco database, carries it
+between environments with uSync, and renders it through the Heliograph engine for post, PDF,
+email and text.
 
 It is to Heliograph what
 [Wayfinder.Umbraco](https://github.com/jonnymuir/Wayfinder.Umbraco) is to Wayfinder. The engine,
-the template model, the renderers and the editor live in the Heliograph repo and are consumed
+the dictionary, the compiler and the workbench live in the Heliograph repo and are consumed
 here as NuGet packages. This repo adds only what is Umbraco: storage, the backoffice screens and
-the wiring.
+the wiring. Like the engine, it includes no editor.
 
 It deliberately does **not** deliver anything, and carries no tenancy or sign-in opinion of its
 own. The site sends what Heliograph renders through whichever provider it uses.
@@ -57,9 +58,9 @@ publish workflow using NuGet Trusted Publishing is added with the first release;
 
 ## Rules specific to this repo
 
-- **No engine logic here.** Template model, validation, merge and rendering belong in the
-  Heliograph repo. If a change here needs to know how a template renders, the seam is missing
-  upstream: add it there.
+- **No engine logic here.** The correspondence model, dictionary, compiler, merge and rendering
+  belong in the Heliograph repo. If a change here needs to know how a template renders, the seam
+  is missing upstream: add it there.
 - **The package never sends.** No provider SDKs and no mail calls in `src/Heliograph.Umbraco`.
   Delivery in the reference app is sample host code, kept in the reference app.
 - **The package does not depend on Wayfinder.** Only the reference app references

@@ -1,8 +1,8 @@
 # Heliograph.Umbraco
 
 [Heliograph](https://github.com/jonnymuir/Heliograph) for Umbraco: content designers write
-correspondence templates in the backoffice, and the site renders them for email, SMS, messaging
-apps, PDF and print.
+correspondence in the word processor they already use, check and publish it in the backoffice,
+and the site renders it for post, PDF, email and text.
 
 Heliograph renders; it does not deliver. Your site sends what it produces through whichever
 provider you use. With [Wayfinder.Umbraco](https://github.com/jonnymuir/Wayfinder.Umbraco)
