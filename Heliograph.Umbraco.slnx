@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Heliograph.Umbraco/Heliograph.Umbraco.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Heliograph.Umbraco.Tests/Heliograph.Umbraco.Tests.csproj" />
+  </Folder>
+</Solution>
