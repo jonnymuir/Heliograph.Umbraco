@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Tests that need a started Umbraco site. They run in their own process and share one start, because Umbraco
+       takes many seconds to start. Put a test here only when the behaviour comes from the site being whole: what is
+       served, what is refused, the order of the middleware. -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AwesomeAssertions" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="AwesomeAssertions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/Heliograph.Umbraco.ReferenceApp/Heliograph.Umbraco.ReferenceApp.csproj" />
+    <ProjectReference Include="../../src/Heliograph.Umbraco/Heliograph.Umbraco.csproj" />
+  </ItemGroup>
+
+</Project>

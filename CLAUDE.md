@@ -35,20 +35,55 @@ Follow them; this file adds only what is specific to this repo.
 
 | Project | Purpose |
 |---|---|
-| `src/Heliograph.Umbraco` | The publishable package. Empty until the Heliograph engine has something to host. |
-| `tests/Heliograph.Umbraco.Tests` | Fast behavioural tests, no host boot (xUnit, AwesomeAssertions). |
+| `src/Heliograph.Umbraco` | The publishable package. Its composer wires everything, so a site adds nothing to `Program.cs`: the Correspondence entry under Settings, and the `CorrespondenceAdmin` policy. Storage and the screens arrive with the engine's first prerelease. |
+| `src/Heliograph.Umbraco.Client` | The backoffice client (TypeScript, Lit, Vite). Built into `src/Heliograph.Umbraco/wwwroot/dist`, which is not committed, and packed as static web assets. |
+| `src/Heliograph.Umbraco.ReferenceApp` | An Umbraco 17 site with the package installed. Proves it in a real site and is what the booted-site tests start. Never ships. |
+| `tests/Heliograph.Umbraco.Tests` | Fast behavioural tests, no site started (xUnit, AwesomeAssertions, Moq for Umbraco's interfaces). |
+| `tests/Heliograph.Umbraco.IntegrationTests` | Tests that need a started site, sharing one start. Put a test here only when the behaviour comes from the site being whole. |
 
-Planned, and described in the architecture: `Heliograph.Umbraco.Client` (backoffice bundles), a
-reference app that never ships, and a booted-host integration suite.
+Still planned, and described in the architecture: Wayfinder.Umbraco in the reference app, and an
+Aspire host.
+
+## Beside Wayfinder.Umbraco
+
+A site will often have both packages, so this one is built to look and work like its sister.
+Before adding something Wayfinder.Umbraco already has, read how it does it and do the same:
+
+- **Where it sits.** Correspondence is a menu item in the Settings section's Advanced menu that
+  opens a root workspace, exactly as Blueprints is. No section of its own.
+- **How it is wired.** A composer and no `Program.cs` lines. Anything a site must choose is an
+  option under the `Heliograph` configuration section, as Wayfinder's is under `Wayfinder`.
+- **Who gets in.** `Heliograph:CorrespondenceAdmin` mirrors `Wayfinder:BlueprintsAdmin`:
+  members of `AdminGroupAliases`, Administrators by default.
+- **Names.** `Heliograph.*` aliases where Wayfinder has `Wayfinder.*`; the API is
+  `/umbraco/management/api/v1/heliograph/...`; the MCP endpoint will be
+  `/heliograph/correspondence-authoring/mcp`.
+- **Agents.** One sign-in package shared by both (decided in Heliograph's brief), and a
+  "Connect" panel on the screen like Wayfinder's "Connect a design partner".
+- **Guides are skills.** A guide for people who use the package goes in
+  `docs/skills/<name>/SKILL.md`, as in the Heliograph repo, so it is also what an agent reads.
 
 ## Build and test
 
 ```bash
+# The backoffice client must be built before the site, or the screen has nothing to load.
+cd src/Heliograph.Umbraco.Client && npm ci && npm run build && cd ../..
+
 dotnet build Heliograph.Umbraco.slnx
 dotnet test Heliograph.Umbraco.slnx
 node scripts/check-policies.mjs
 node scripts/check-doc-links.mjs
 ```
+
+The reference site installs itself into its own SQLite database on first start:
+
+```bash
+dotnet run --project src/Heliograph.Umbraco.ReferenceApp
+# https://localhost:44398/umbraco, admin@example.test / Heliograph123!
+```
+
+The backoffice only signs in over HTTPS. `Program.cs` gives Umbraco a fresh image-signing key on
+each run, so Umbraco never writes one into `appsettings.json`.
 
 ## Releasing
 
@@ -70,5 +105,5 @@ publish workflow using NuGet Trusted Publishing is added with the first release;
 - **Correspondence contains personal data.** Never log merged data or rendered output. Sample
   content uses obviously fictional people and addresses.
 - **Restore and publish use nuget.org only.** No GitHub Packages feed.
-- **The DAST and performance workflows return with the reference app.** They were left out
-  because there is no site to scan or load yet.
+- **The DAST and performance workflows are still to add.** There is now a reference site to scan
+  and load; they come with the first screens that take input.

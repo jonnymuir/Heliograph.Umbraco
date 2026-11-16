@@ -27,7 +27,7 @@ dotnet_diagnostic.CA1502.severity = warning
 dotnet_diagnostic.CA1506.severity = warning
 
 # Tests name behaviours with underscores and wire many types on purpose.
-[**/*.Tests/**.cs]
+[**/*Tests/**.cs]
 dotnet_diagnostic.CA1707.severity = none
 dotnet_diagnostic.CA1506.severity = none
 
