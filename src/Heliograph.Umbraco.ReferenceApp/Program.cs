@@ -2,8 +2,6 @@ using System.Security.Cryptography;
 using Heliograph.Documents;
 using Heliograph.Pdf.LibreOffice;
 using Heliograph.Umbraco.ReferenceApp;
-using Umbraco.Cms.Core.Events;
-using Umbraco.Cms.Core.Notifications;
 using Wayfinder.Engine.Abstractions;
 
 // Wayfinder reads its support systems once, so Heliograph's is registered before anything else starts.
@@ -37,8 +35,6 @@ builder.CreateUmbracoBuilder()
     .AddWebsite()
     .AddComposers()
     .Build();
-
-builder.Services.AddSingleton<INotificationAsyncHandler<UmbracoApplicationStartedNotification>, ReferenceSeeder>();
 
 var app = builder.Build();
 
