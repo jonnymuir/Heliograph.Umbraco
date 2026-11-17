@@ -13,7 +13,7 @@ namespace Heliograph.Umbraco.ReferenceApp;
 /// Demo only. On first start, puts the decision letter in the library with its dictionary and sample recipients and
 /// publishes it, and adds the licence blueprint that sends it, so there is something to try at once.
 /// </summary>
-internal sealed partial class ReferenceSeeder(
+public sealed partial class ReferenceSeeder(
     IServiceProvider services, IWebHostEnvironment environment, IRuntimeState runtime, ILogger<ReferenceSeeder> logger)
     : INotificationAsyncHandler<UmbracoApplicationStartedNotification>
 {

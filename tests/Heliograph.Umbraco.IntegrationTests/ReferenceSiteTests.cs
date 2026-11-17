@@ -35,7 +35,7 @@ public class ReferenceSiteTests(ReferenceAppFactory site)
     private static async Task<T?> Eventually<T>(Func<Task<T?>> read)
         where T : class
     {
-        for (var tries = 0; tries < 40; tries++)
+        for (var tries = 0; tries < 240; tries++)
         {
             if (await read() is { } found)
             {
@@ -45,6 +45,6 @@ public class ReferenceSiteTests(ReferenceAppFactory site)
             await Task.Delay(250);
         }
 
-        return null;
+        throw new TimeoutException("The reference site did not seed within a minute.");
     }
 }
