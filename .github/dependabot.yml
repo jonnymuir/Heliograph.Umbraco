@@ -12,6 +12,15 @@ updates:
       dotnet:
         patterns: ["*"]
         update-types: ["minor", "patch"]
+    ignore:
+      # Pinned only to patch the copy Aspire pulls in (GHSA-qhrr-8q5h-9q3h). Aspire is built against this major, and
+      # CI does not run the Aspire host, so a new major is taken by hand with Aspire, not by auto-PR.
+      - dependency-name: "MessagePack"
+        update-types: ["version-update:semver-major"]
+      # This package targets one Umbraco major at a time (see CLAUDE.md). A new Umbraco major is a deliberate,
+      # tested move, as in Wayfinder.Umbraco; minor and patch updates within it still flow.
+      - dependency-name: "Umbraco.Cms*"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
@@ -33,3 +42,7 @@ updates:
       backoffice-client:
         patterns: ["*"]
         update-types: ["minor", "patch"]
+    ignore:
+      # The backoffice library's major is bound to the Umbraco major the package ships against, so it moves with it.
+      - dependency-name: "@umbraco-cms/backoffice"
+        update-types: ["version-update:semver-major"]
