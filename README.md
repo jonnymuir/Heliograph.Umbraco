@@ -216,7 +216,7 @@ explains each piece.
 |---|---|
 | Umbraco | 17 (LTS). The package will not install on 18: a new Umbraco major is a deliberate move, not an automatic one |
 | .NET | 10 |
-| Heliograph | 0.1.0-alpha.5, from nuget.org |
+| Heliograph | 0.1.0-alpha.6, from nuget.org |
 | Wayfinder.Umbraco | Optional. 6.4 or later with Wayfinder 0.28, to send correspondence from a blueprint |
 | LibreOffice | Optional, on the server: PDFs and opening documents from the backoffice |
 
