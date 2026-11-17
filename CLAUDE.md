@@ -12,7 +12,9 @@ It is to Heliograph what
 [Wayfinder.Umbraco](https://github.com/jonnymuir/Wayfinder.Umbraco) is to Wayfinder. The engine,
 the dictionary, the compiler and the workbench live in the Heliograph repo and are consumed
 here as NuGet packages. This repo adds only what is Umbraco: storage, the backoffice screens and
-the wiring. Like the engine, it includes no editor.
+the wiring. Like the engine, it includes no word processor: the backoffice hosts the workbench,
+where the email and the text are written and the document is brought in from the author's own
+word processor.
 
 It deliberately does **not** deliver anything, and carries no tenancy or sign-in opinion of its
 own. The site sends what Heliograph renders through whichever provider it uses.
