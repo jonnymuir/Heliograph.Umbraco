@@ -8,8 +8,9 @@ Heliograph renders; it does not deliver. Your site sends what it produces throug
 provider you use. With [Wayfinder.Umbraco](https://github.com/jonnymuir/Wayfinder.Umbraco)
 installed, a service blueprint can send a letter at any stage of a journey.
 
-> **Status:** early. Nothing is published yet. The package installs into Umbraco 17 and adds a
-> Correspondence entry under Settings; uploading and publishing are not built. See the
+> **Status:** early. Nothing is published yet. The package installs into Umbraco 17: correspondence
+> and dictionaries are kept in the Umbraco database, and **Settings → Correspondence** is the
+> Heliograph workbench, where authors write, check, preview and publish. See the
 > [architecture](https://github.com/jonnymuir/Heliograph/blob/main/docs/architecture.md).
 
 ## Licence
