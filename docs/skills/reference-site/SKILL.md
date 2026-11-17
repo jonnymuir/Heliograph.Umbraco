@@ -48,7 +48,11 @@ developer's machine only. The backoffice only signs in over HTTPS.
    `umbraco/Data/Outbox/<request>`.
 4. **See it fail properly.** Refuse an application without a reason. Nothing is sent, and the
    caseworker sees **Decision letter not sent** with what was missing.
-5. **Change the letter.** In the backoffice, **Settings → Correspondence**, open the decision
+5. **Change the document where it is.** In **Settings → Correspondence**, open the decision letter
+   and press **Open in LibreOffice** (or **Open in Word** on the desktop). Change the letter, save
+   it in your word processor, and come back to the backoffice: the workbench shows what is now
+   wrong, if anything.
+6. **Change the letter.** In the backoffice, **Settings → Correspondence**, open the decision
    letter, change the text message, preview it with a sample and publish it. The next application
    is sent version 2; requests already sent keep the version they were given.
 
