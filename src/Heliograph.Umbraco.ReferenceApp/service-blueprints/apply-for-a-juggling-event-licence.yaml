@@ -1,0 +1,218 @@
+definitionKey: apply-for-a-juggling-event-licence
+displayName: Apply for a juggling event licence
+version: 1
+description: A member of the public applies for a licence, a licensing officer decides, and the decision letter is sent by Heliograph. The worked example of Wayfinder and Heliograph together.
+initialStage: apply
+requestPolicy: single
+allowManualRestart: true
+queues:
+  - key: applicant
+    displayName: Applicant
+    actor: applicant
+  - key: licensing
+    displayName: Licensing team
+    actor: caseworker
+  - key: letters
+    displayName: Letters
+    actor: system
+stages:
+  - stageKey: apply
+    displayName: Apply for a licence
+    queueKey: applicant
+    components:
+      - type: text
+        fieldKey: applicantName
+        label: Your full name
+        required: true
+        maxLength: 100
+      - type: email
+        fieldKey: applicantEmail
+        label: Your email address
+        required: true
+      - type: textarea
+        fieldKey: applicantAddress
+        label: Your postal address
+        hint: Put each line of the address on a new line.
+        required: true
+      - type: text
+        fieldKey: eventName
+        label: Name of the event
+        required: true
+        maxLength: 100
+      - type: date
+        fieldKey: eventDate
+        label: Date of the event
+        required: true
+      - type: number
+        fieldKey: numberOfJugglers
+        label: How many jugglers will perform?
+        required: true
+      - type: radio
+        fieldKey: dangerousProps
+        label: Will anyone juggle fire, knives or other dangerous props?
+        required: true
+        options:
+          - "Yes"
+          - "No"
+    routes:
+      - id: apply--submit--to-licensing
+        target: to-licensing
+        trigger: submit
+        label: Send application
+        style: primary
+  - stageKey: application-sent
+    displayName: Application sent
+    stageType: Confirmation
+    queueKey: applicant
+    components:
+      - type: panel
+        heading: Application sent
+      - type: body
+        content: The licensing team will decide on your application. We will email you our decision, with the letter attached.
+  - stageKey: decide
+    displayName: Decide on the application
+    queueKey: licensing
+    components:
+      - type: summary-list
+        title: Application
+        children:
+          - type: text
+            fieldKey: applicantName
+            label: Name
+          - type: text
+            fieldKey: applicantEmail
+            label: Email
+          - type: text
+            fieldKey: eventName
+            label: Event
+          - type: text
+            fieldKey: eventDate
+            label: Date
+          - type: text
+            fieldKey: numberOfJugglers
+            label: Jugglers
+          - type: text
+            fieldKey: dangerousProps
+            label: Dangerous props
+      - type: radio
+        fieldKey: decision
+        label: Decision
+        required: true
+        options:
+          - Approve
+          - Refuse
+      - type: text
+        fieldKey: licenceNumber
+        label: Licence number (if approved)
+      - type: decimal
+        fieldKey: licenceFee
+        label: Licence fee in pounds (if approved)
+      - type: date
+        fieldKey: feeDueDate
+        label: Fee due by (if approved)
+      - type: textarea
+        fieldKey: reasonForRefusal
+        label: Reason for refusal (if refused)
+      - type: date
+        fieldKey: reviewDeadline
+        label: Ask for a review by (if refused)
+    routes:
+      - id: decide--send--send-decision
+        target: send-decision
+        trigger: send
+        label: Send the decision letter
+        style: primary
+  - stageKey: send-decision-letter
+    displayName: Send the decision letter
+    queueKey: letters
+    actions:
+      - type: support-system-call
+        timing: onEnter
+        params:
+          supportSystemKey: heliograph
+          capabilityKey: send-correspondence
+          inputs:
+            correspondence: decision-letter
+            email: applicantEmail
+    components:
+      - type: panel
+        heading: Sending the decision letter
+    routes:
+      - id: send-decision-letter--sent--letter-outcome
+        target: letter-outcome
+        trigger: sent
+      - id: send-decision-letter--failed--letter-outcome
+        target: letter-outcome
+        trigger: failed
+  - stageKey: decision-sent
+    displayName: Decision letter sent
+    stageType: Confirmation
+    queueKey: licensing
+    components:
+      - type: panel
+        heading: Decision letter sent
+      - type: summary-list
+        title: Letter
+        children:
+          - type: text
+            fieldKey: correspondenceVersion
+            label: Version of the decision letter sent
+  - stageKey: letter-not-sent
+    displayName: Decision letter not sent
+    stageType: Confirmation
+    queueKey: licensing
+    components:
+      - type: warning-text
+        content: The decision letter was not sent.
+      - type: summary-list
+        title: Why
+        children:
+          - type: text
+            fieldKey: correspondenceProblem
+            label: Problem
+gateways:
+  - key: to-licensing
+    displayName: Pass to the licensing team
+    gatewayType: Split
+    queueKey: applicant
+    routes:
+      - id: to-licensing--submit--decide
+        target: decide
+        trigger: submit
+      - id: to-licensing--submit--application-sent
+        target: application-sent
+        trigger: submit
+  - key: send-decision
+    displayName: Send the decision
+    gatewayType: Split
+    queueKey: licensing
+    routes:
+      - id: send-decision--send--send-decision-letter
+        target: send-decision-letter
+        trigger: send
+      - id: send-decision--send--letter-outcome
+        target: letter-outcome
+        trigger: send
+  - key: letter-outcome
+    displayName: Letter sent or not
+    gatewayType: Join
+    queueKey: licensing
+    waitingContent: Heliograph is sending the decision letter. This page will update in a moment.
+    waitingPace: WhileTheyWait
+    waitingPollIntervalMs: 2000
+    routes:
+      - id: letter-outcome--sent--decision-sent
+        target: decision-sent
+        trigger: sent
+      - id: letter-outcome--failed--letter-not-sent
+        target: letter-not-sent
+        trigger: failed
+    requiredIncomingQueues:
+      - licensing
+      - letters
+calculations:
+  fields:
+    licenceApproved:
+      expr: decision = 'Approve'
+    licenceRefused:
+      expr: decision = 'Refuse'

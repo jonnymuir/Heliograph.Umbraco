@@ -1,0 +1,15 @@
+{
+  "applicantName": "Siobhán O'Hare-Ng",
+  "applicantAddress": ["Flat 3, The Old Circus & Fairground", "9 <Upper> Catch Street", "Little Throwing-on-the-Wold", "Clubshire", "ZZ9 9ZZ"],
+  "applicationReference": "NJF-2026-004218",
+  "eventName": "The Little Throwing-on-the-Wold \"Fire & Knives\" Midsummer Spectacular <2027>",
+  "eventDate": "2027-06-21",
+  "numberOfJugglers": 6,
+  "letterDate": "2026-12-10",
+  "licenceApproved": true,
+  "licenceRefused": false,
+  "dangerousProps": true,
+  "licenceNumber": "JL-27-00382",
+  "licenceFee": 120.5,
+  "feeDueDate": "2027-01-09"
+}

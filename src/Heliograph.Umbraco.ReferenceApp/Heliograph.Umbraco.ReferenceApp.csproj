@@ -12,6 +12,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Wayfinder, through its starter kit: pages, a demo caseworker and /services/{key}, with no code. Never a
+         dependency of the Heliograph.Umbraco package itself, only of this site. Wayfinder.Engine is named so the site
+         gets 0.28, which lets a support-system call give the correspondence's key as a fixed value. -->
+    <PackageReference Include="Wayfinder.Umbraco.Starter" />
+    <PackageReference Include="Wayfinder.Engine" />
+    <!-- One route to PDF, so the decision letter is attached to its email as a PDF where LibreOffice is installed. -->
+    <PackageReference Include="Heliograph.Pdf.LibreOffice" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- A project reference, not the published package: this site proves the package before it is published, and
          goes on proving it afterwards. It never ships. -->
     <ProjectReference Include="../Heliograph.Umbraco/Heliograph.Umbraco.csproj" />

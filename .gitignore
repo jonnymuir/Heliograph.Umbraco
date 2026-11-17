@@ -489,3 +489,7 @@ src/Heliograph.Umbraco.ReferenceApp/umbraco/
 src/Heliograph.Umbraco.ReferenceApp/wwwroot/media/
 src/Heliograph.Umbraco.ReferenceApp/appsettings.Local.json
 src/Heliograph.Umbraco.ReferenceApp/appsettings-schema*.json
+# Written when the reference site runs: uSync's export of the seeded content, and the home page template that
+# Wayfinder.Umbraco's starter writes on first start.
+src/Heliograph.Umbraco.ReferenceApp/uSync/
+src/Heliograph.Umbraco.ReferenceApp/Views/wayfinderStarterHome.cshtml

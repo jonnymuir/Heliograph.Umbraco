@@ -1,0 +1,19 @@
+{
+  "fields": [
+    { "name": "Applicant name", "key": "applicantName", "type": "text" },
+    { "name": "Applicant address", "key": "applicantAddress", "type": "address" },
+    { "name": "Application reference", "key": "applicationReference", "type": "text" },
+    { "name": "Event name", "key": "eventName", "type": "text" },
+    { "name": "Event date", "key": "eventDate", "type": "date" },
+    { "name": "Number of jugglers", "key": "numberOfJugglers", "type": "number" },
+    { "name": "Letter date", "key": "letterDate", "type": "date" },
+    { "name": "Licence approved", "key": "licenceApproved", "type": "yesNo" },
+    { "name": "Licence refused", "key": "licenceRefused", "type": "yesNo" },
+    { "name": "Dangerous props", "key": "dangerousProps", "type": "yesNo" },
+    { "name": "Licence number", "key": "licenceNumber", "type": "text" },
+    { "name": "Licence fee", "key": "licenceFee", "type": "money" },
+    { "name": "Fee due date", "key": "feeDueDate", "type": "date" },
+    { "name": "Reason for refusal", "key": "reasonForRefusal", "type": "text" },
+    { "name": "Review deadline", "key": "reviewDeadline", "type": "date" }
+  ]
+}

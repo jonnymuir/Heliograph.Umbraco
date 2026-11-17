@@ -39,12 +39,13 @@ Follow them; this file adds only what is specific to this repo.
 |---|---|
 | `src/Heliograph.Umbraco` | The publishable package. Its composer wires everything, so a site adds nothing to `Program.cs`: correspondence and dictionaries in the Umbraco database (`Stores/`, `Persistence/`), the authoring API from `Heliograph.Api` at `/heliograph/api`, the Correspondence entry under Settings hosting the workbench from `Heliograph.Workbench`, and the `CorrespondenceAdmin` policy. |
 | `src/Heliograph.Umbraco.Client` | The backoffice client (TypeScript, Lit, Vite). Built into `src/Heliograph.Umbraco/wwwroot/dist`, which is not committed, and packed as static web assets. |
-| `src/Heliograph.Umbraco.ReferenceApp` | An Umbraco 17 site with the package installed. Proves it in a real site and is what the booted-site tests start. Never ships. |
+| `src/Heliograph.Umbraco.ReferenceApp` | An Umbraco 17 site with this package and Wayfinder.Umbraco (through its starter kit). Seeds the decision letter and a licence blueprint whose stage sends it through the `heliograph` support system, the worked example of the join. What the booted-site tests start. Never ships. See [docs/skills/reference-site](docs/skills/reference-site/SKILL.md). |
+| `src/Heliograph.Umbraco.AppHost` | Aspire host: the reference site and Mailpit, a local mailbox. VS Code's Run and Debug has it and the standalone site, as Wayfinder.Umbraco's does. |
 | `tests/Heliograph.Umbraco.Tests` | Fast behavioural tests, no site started (xUnit, AwesomeAssertions, Moq for Umbraco's interfaces). |
 | `tests/Heliograph.Umbraco.IntegrationTests` | Tests that need a started site, sharing one start. Put a test here only when the behaviour comes from the site being whole. |
 
-Still planned, and described in the architecture: Wayfinder.Umbraco in the reference app, and an
-Aspire host.
+Still to come: the MCP endpoint through the sign-in package shared with Wayfinder.Umbraco, uSync,
+and a check before sending that a blueprint supplies every field a correspondence needs.
 
 ## Beside Wayfinder.Umbraco
 

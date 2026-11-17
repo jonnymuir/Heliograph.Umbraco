@@ -1,0 +1,47 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C#: Aspire (Heliograph.Umbraco.ReferenceApp)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "Reference site: prepare AppHost",
+      "program": "${workspaceFolder}/src/Heliograph.Umbraco.AppHost/bin/Debug/net10.0/Heliograph.Umbraco.AppHost.dll",
+      "cwd": "${workspaceFolder}/src/Heliograph.Umbraco.AppHost",
+      "console": "internalConsole",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:17398;http://localhost:15398",
+        "DOTNET_DASHBOARD_OTLP_ENDPOINT_URL": "https://localhost:21398",
+        "DOTNET_RESOURCE_SERVICE_ENDPOINT_URL": "https://localhost:22398",
+        // Local dev only: skips the dashboard's browser-token login prompt so VS Code can open it straight to the
+        // URL below. Never set this outside a local debug session; it turns the dashboard's own sign-in off.
+        "DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS": "true"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "Distributed application started\\.",
+        "uriFormat": "https://localhost:17398"
+      }
+    },
+    {
+      "name": "C#: Heliograph.Umbraco.ReferenceApp (standalone)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "Reference site: prepare",
+      "program": "${workspaceFolder}/src/Heliograph.Umbraco.ReferenceApp/bin/Debug/net10.0/Heliograph.Umbraco.ReferenceApp.dll",
+      "cwd": "${workspaceFolder}/src/Heliograph.Umbraco.ReferenceApp",
+      "console": "internalConsole",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:44398"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "Now listening on:\\s+(https://\\S+)",
+        "uriFormat": "%s"
+      }
+    }
+  ]
+}
