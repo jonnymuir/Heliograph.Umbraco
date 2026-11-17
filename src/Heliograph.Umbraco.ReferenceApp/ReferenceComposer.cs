@@ -2,15 +2,14 @@ using Heliograph.Library;
 using Heliograph.Umbraco;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Core.Notifications;
 using Wayfinder.Umbraco;
 using Wayfinder.Umbraco.Starter;
 
 namespace Heliograph.Umbraco.ReferenceApp;
 
 /// <summary>
-/// Registers the demo seeder after both packages' composers. Umbraco runs start-up handlers in the order they were
-/// registered, so the seeder runs after the migrations that create Heliograph's and Wayfinder's tables.
+/// The reference site's own wiring: the demo seeder, and blueprints as starting points for a new dictionary. It composes
+/// after both packages so their services are there to use.
 /// </summary>
 [ComposeAfter(typeof(HeliographUmbracoComposer))]
 [ComposeAfter(typeof(WayfinderUmbracoComposer))]
@@ -19,7 +18,8 @@ public sealed class ReferenceComposer : IComposer
 {
     public void Compose(IUmbracoBuilder builder)
     {
-        builder.AddNotificationAsyncHandler<UmbracoApplicationStartedNotification, ReferenceSeeder>();
+        builder.Services.AddSingleton<ReferenceSeeder>();
+        builder.Services.AddHostedService(provider => provider.GetRequiredService<ReferenceSeeder>());
 
         // "New dictionary" in the workbench can start from any Wayfinder service blueprint's fields.
         builder.Services.AddSingleton<IDictionaryStartingPoints, BlueprintStartingPoints>();

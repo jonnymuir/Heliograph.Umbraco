@@ -90,9 +90,11 @@ each run, so Umbraco never writes one into `appsettings.json`.
 
 ## Releasing
 
-Not yet released. The version lives in `src/Heliograph.Umbraco/Heliograph.Umbraco.csproj`. A
-publish workflow using NuGet Trusted Publishing is added with the first release; until then
-`/release` has nothing to publish.
+The version lives in `src/Heliograph.Umbraco/Heliograph.Umbraco.csproj`. A tag `v<version>` runs
+`.github/workflows/package-release.yml`: it checks the tag against that version, runs every
+suite, and publishes to nuget.org through Trusted Publishing, then creates the GitHub release. A
+version with a hyphen is a prerelease. To publish one: bump the version in a PR, merge it, then
+tag the merge commit. Nothing stable has been released.
 
 ## Rules specific to this repo
 

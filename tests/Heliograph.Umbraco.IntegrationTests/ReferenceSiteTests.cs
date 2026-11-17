@@ -5,7 +5,7 @@ using Wayfinder.Models.ServiceDesign.SupportSystems;
 
 namespace Heliograph.Umbraco.IntegrationTests;
 
-/// <summary>What someone who presses Run gets: the decision letter published, and the licence blueprint that sends it.</summary>
+/// <summary>What someone who presses Run gets, once the site has seeded (the factory waits for it): the decision letter published, and the licence blueprint that sends it.</summary>
 [Collection(StartedReferenceSite.Name)]
 public class ReferenceSiteTests(ReferenceAppFactory site)
 {
@@ -14,7 +14,7 @@ public class ReferenceSiteTests(ReferenceAppFactory site)
     {
         var library = site.Services.GetRequiredService<CorrespondenceLibrary>();
 
-        var published = await Eventually(() => library.ReadVersionAsync("decision-letter"));
+        var published = await library.ReadVersionAsync("decision-letter");
 
         published!.Version.Should().Be(1);
         (await library.Dictionaries.SamplesAsync("decision-letter")).Should().BeEquivalentTo("approved", "approved-dangerous-props", "refused");
@@ -25,7 +25,7 @@ public class ReferenceSiteTests(ReferenceAppFactory site)
     {
         var store = site.Services.GetRequiredService<IServiceBlueprintSourceStore>();
 
-        var blueprint = await Eventually(() => store.LoadAsync("apply-for-a-juggling-event-licence"));
+        var blueprint = await store.LoadAsync("apply-for-a-juggling-event-licence");
 
         blueprint!.ValidateSupportSystemActions().Should().BeEmpty();
         SupportSystemRegistry.FindCapability("heliograph", "send-correspondence").Should().NotBeNull();
@@ -35,7 +35,7 @@ public class ReferenceSiteTests(ReferenceAppFactory site)
     public async Task A_new_dictionary_can_start_from_the_licence_blueprints_fields()
     {
         var library = site.Services.GetRequiredService<CorrespondenceLibrary>();
-        var blueprint = await Eventually(() => site.Services.GetRequiredService<IServiceBlueprintSourceStore>().LoadAsync("apply-for-a-juggling-event-licence"));
+        var blueprint = await site.Services.GetRequiredService<IServiceBlueprintSourceStore>().LoadAsync("apply-for-a-juggling-event-licence");
 
         var point = (await library.Dictionaries.Editing.StartingPointsAsync()).Should().ContainSingle(p => p.Name == blueprint!.DisplayName).Subject;
         var fields = FieldDictionary.Parse(point.Json).Fields.ToDictionary(f => f.Key);
@@ -61,22 +61,5 @@ public class ReferenceSiteTests(ReferenceAppFactory site)
 
         (await library.Dictionaries.SamplesAsync("kept-here")).Should().BeEmpty();
         (await library.Dictionaries.SheetAsync("kept-here"))!.Fields.Should().ContainSingle();
-    }
-
-    /// <summary>The site seeds once Umbraco has started, which can be a moment after the first request is answered.</summary>
-    private static async Task<T?> Eventually<T>(Func<Task<T?>> read)
-        where T : class
-    {
-        for (var tries = 0; tries < 240; tries++)
-        {
-            if (await read() is { } found)
-            {
-                return found;
-            }
-
-            await Task.Delay(250);
-        }
-
-        throw new TimeoutException("The reference site did not seed within a minute.");
     }
 }

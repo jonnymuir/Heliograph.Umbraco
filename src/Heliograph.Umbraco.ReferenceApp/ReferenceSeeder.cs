@@ -1,8 +1,6 @@
 using Heliograph.Library;
 using Heliograph.Umbraco.Stores;
 using Umbraco.Cms.Core;
-using Umbraco.Cms.Core.Events;
-using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Core.Services;
 using Wayfinder.Engine.Abstractions;
 using Wayfinder.Models.ServiceDesign;
@@ -13,23 +11,54 @@ namespace Heliograph.Umbraco.ReferenceApp;
 /// Demo only. On first start, puts the decision letter in the library with its dictionary and sample recipients and
 /// publishes it, and adds the licence blueprint that sends it, so there is something to try at once.
 /// </summary>
+/// <remarks>
+/// On a fresh database Umbraco can still be installing, and the packages' tables still being made, when it says it has
+/// started. So this waits until Umbraco is running, then tries until the seed goes in, rather than trying once at
+/// start-up and quietly doing nothing. <see cref="Seeded"/> finishes when it has, or fails with why it could not.
+/// </remarks>
 public sealed partial class ReferenceSeeder(
     IServiceProvider services, IWebHostEnvironment environment, IRuntimeState runtime, ILogger<ReferenceSeeder> logger)
-    : INotificationAsyncHandler<UmbracoApplicationStartedNotification>
+    : BackgroundService
 {
+    private static readonly TimeSpan Pause = TimeSpan.FromSeconds(1);
+    private const int Attempts = 120;
+    private readonly TaskCompletionSource _seeded = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+    /// <summary>Finishes once the demo is seeded; fails with the last reason if it never could be.</summary>
+    public Task Seeded => _seeded.Task;
     private const string Letter = "decision-letter";
     private const string Blueprint = "apply-for-a-juggling-event-licence";
 
-    public async Task HandleAsync(UmbracoApplicationStartedNotification notification, CancellationToken cancellationToken)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (runtime.Level < RuntimeLevel.Run)
+        for (var attempt = 1; !stoppingToken.IsCancellationRequested; attempt++)
         {
-            return;
+            try
+            {
+                if (runtime.Level == RuntimeLevel.Run)
+                {
+                    using var scope = services.CreateScope();
+                    await SeedLetterAsync(scope.ServiceProvider, stoppingToken);
+                    await SeedBlueprintAsync(scope.ServiceProvider, stoppingToken);
+                    _seeded.TrySetResult();
+                    return;
+                }
+            }
+            catch (Exception problem) when (problem is not OperationCanceledException && attempt < Attempts)
+            {
+                LogNotYet(logger, attempt, problem.Message);
+            }
+            catch (Exception problem) when (problem is not OperationCanceledException)
+            {
+                LogNotSeeded(logger, problem);
+                _seeded.TrySetException(problem);
+                return;
+            }
+
+            await Task.Delay(Pause, stoppingToken);
         }
 
-        using var scope = services.CreateScope();
-        await SeedLetterAsync(scope.ServiceProvider, cancellationToken);
-        await SeedBlueprintAsync(scope.ServiceProvider, cancellationToken);
+        _seeded.TrySetCanceled(stoppingToken);
     }
 
     private async Task SeedLetterAsync(IServiceProvider scoped, CancellationToken ct)
@@ -72,13 +101,16 @@ public sealed partial class ReferenceSeeder(
         var saved = await store.SaveAsync(ServiceBlueprintYaml.Deserialize(yaml), expectedVersion: 0, ct);
         if (!saved.Saved)
         {
-            LogBlueprintNotSeeded(logger, saved.ToString());
+            throw new InvalidOperationException($"The licence blueprint was not saved: {saved}");
         }
     }
 
     [LoggerMessage(Level = LogLevel.Information, Message = "Seeded the decision letter: published as version {Version}.")]
     private static partial void LogSeeded(ILogger logger, int version);
 
-    [LoggerMessage(Level = LogLevel.Error, Message = "The licence blueprint was not seeded: {Result}")]
-    private static partial void LogBlueprintNotSeeded(ILogger logger, string result);
+    [LoggerMessage(Level = LogLevel.Information, Message = "The demo could not be seeded yet (attempt {Attempt}): {Reason}")]
+    private static partial void LogNotYet(ILogger logger, int attempt, string reason);
+
+    [LoggerMessage(Level = LogLevel.Error, Message = "The demo was not seeded.")]
+    private static partial void LogNotSeeded(ILogger logger, Exception problem);
 }
