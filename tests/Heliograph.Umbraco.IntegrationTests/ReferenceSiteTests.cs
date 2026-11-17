@@ -31,6 +31,38 @@ public class ReferenceSiteTests(ReferenceAppFactory site)
         SupportSystemRegistry.FindCapability("heliograph", "send-correspondence").Should().NotBeNull();
     }
 
+    [Fact]
+    public async Task A_new_dictionary_can_start_from_the_licence_blueprints_fields()
+    {
+        var library = site.Services.GetRequiredService<CorrespondenceLibrary>();
+        var blueprint = await Eventually(() => site.Services.GetRequiredService<IServiceBlueprintSourceStore>().LoadAsync("apply-for-a-juggling-event-licence"));
+
+        var point = (await library.Dictionaries.Editing.StartingPointsAsync()).Should().ContainSingle(p => p.Name == blueprint!.DisplayName).Subject;
+        var fields = FieldDictionary.Parse(point.Json).Fields.ToDictionary(f => f.Key);
+
+        fields["applicantName"].Name.Should().Be("Applicant name");
+        fields["eventDate"].Type.Should().Be(FieldType.Date);
+        fields["numberOfJugglers"].Type.Should().Be(FieldType.Number);
+        fields["dangerousProps"].Type.Should().Be(FieldType.YesNo, "its options are Yes and No");
+        fields["licenceApproved"].Type.Should().Be(FieldType.YesNo, "it is a calculated comparison");
+    }
+
+    [Fact]
+    public async Task A_dictionary_and_its_samples_are_kept_in_the_database_from_the_workbench()
+    {
+        var library = site.Services.GetRequiredService<CorrespondenceLibrary>();
+
+        library.Dictionaries.Editing.CanEdit.Should().BeTrue();
+        (await library.Dictionaries.Editing.SaveAsync("kept-here", """{ "fields": [ { "name": "Member name", "key": "memberName", "type": "text" } ] }""")).Saved.Should().BeTrue();
+        (await library.Dictionaries.Editing.SaveSampleAsync("kept-here", "alex", """{ "memberName": "Alex Example" }""")).Saved.Should().BeTrue();
+        (await library.Dictionaries.SamplesAsync("kept-here")).Should().Equal("alex");
+
+        await library.Dictionaries.Editing.DeleteSampleAsync("kept-here", "alex");
+
+        (await library.Dictionaries.SamplesAsync("kept-here")).Should().BeEmpty();
+        (await library.Dictionaries.SheetAsync("kept-here"))!.Fields.Should().ContainSingle();
+    }
+
     /// <summary>The site seeds once Umbraco has started, which can be a moment after the first request is answered.</summary>
     private static async Task<T?> Eventually<T>(Func<Task<T?>> read)
         where T : class

@@ -7,10 +7,10 @@
     <PackageVersion Include="Aspire.Hosting.AppHost" Version="13.6.5" />
     <PackageVersion Include="MessagePack" Version="2.5.307" />
     <!-- The Heliograph engine, its REST API and its workbench, as any site gets them. Prereleases until 0.1.0. -->
-    <PackageVersion Include="Heliograph" Version="0.1.0-alpha.3" />
-    <PackageVersion Include="Heliograph.Api" Version="0.1.0-alpha.3" />
-    <PackageVersion Include="Heliograph.Pdf.LibreOffice" Version="0.1.0-alpha.3" />
-    <PackageVersion Include="Heliograph.Workbench" Version="0.1.0-alpha.3" />
+    <PackageVersion Include="Heliograph" Version="0.1.0-alpha.5" />
+    <PackageVersion Include="Heliograph.Api" Version="0.1.0-alpha.5" />
+    <PackageVersion Include="Heliograph.Pdf.LibreOffice" Version="0.1.0-alpha.5" />
+    <PackageVersion Include="Heliograph.Workbench" Version="0.1.0-alpha.5" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.13" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />

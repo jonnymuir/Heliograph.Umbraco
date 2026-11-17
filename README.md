@@ -121,6 +121,7 @@ All of this comes from installing the package. A site adds nothing to its `Progr
 | **Settings → Correspondence** | The Heliograph workbench, beside Wayfinder's Blueprints. Write the email and the text message with the dictionary's tags a click away. Bring the document in by dropping a `.docx`, start from a generated starter document, download it back with a Word comment at each problem, or open it in Word or LibreOffice and save straight back. Preview every part with a sample recipient, and publish. |
 | **Checked before it is published** | Every part is compiled against its dictionary. A misspelt tag, a condition left open or a table that would break is reported with where it is and what to do. Nothing with an error can be published. |
 | **Numbered versions** | Authors work on a draft. Publishing makes a version that never changes, and every render says which version it used, so you can record what each person was sent. |
+| **Dictionaries kept in the backoffice** | Add and change the fields a correspondence may use, and the made-up recipients previews use. Saving says which letters a change breaks. A new dictionary can start from a Wayfinder blueprint's fields. |
 | **Stored in the Umbraco database** | Drafts, versions, dictionaries and sample recipients, in the package's own tables. Two people saving at once cannot overwrite each other. |
 | **An API for your code and the workbench** | `/heliograph/api`, closed to anyone who is not a backoffice user in an allowed group. |
 
@@ -150,8 +151,17 @@ The groups also need the **Settings** section, which is where Correspondence sit
 
 ### Adding a dictionary
 
-A dictionary is the list of fields a correspondence may use, written by whoever knows the data.
-Heliograph reads dictionaries and does not edit them, so your site puts them in:
+A dictionary is the list of fields a correspondence may use. Authors keep dictionaries under
+**Settings → Correspondence → Dictionaries**: add and change fields, keep the made-up sample
+recipients previews use, and create a new one. Saving says which correspondence use the dictionary
+and what each draft now gets wrong; published versions keep the dictionary they were published
+with. The same is offered over the API and to an agent.
+
+**New dictionary** can start from a ready-made one your site offers, by registering an
+`IDictionaryStartingPoints`. The reference site offers one for each Wayfinder service blueprint,
+with a field for everything it collects or calculates (`BlueprintStartingPoints.cs`).
+
+Your site can also put dictionaries in from code, say from files it ships with:
 
 ```csharp
 var dictionaries = services.GetRequiredService<UmbracoDictionarySource>();
