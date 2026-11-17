@@ -1,3 +1,4 @@
+using Heliograph.Library;
 using Heliograph.Umbraco;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
@@ -16,6 +17,11 @@ namespace Heliograph.Umbraco.ReferenceApp;
 [ComposeAfter(typeof(StarterComposer))]
 public sealed class ReferenceComposer : IComposer
 {
-    public void Compose(IUmbracoBuilder builder) =>
+    public void Compose(IUmbracoBuilder builder)
+    {
         builder.AddNotificationAsyncHandler<UmbracoApplicationStartedNotification, ReferenceSeeder>();
+
+        // "New dictionary" in the workbench can start from any Wayfinder service blueprint's fields.
+        builder.Services.AddSingleton<IDictionaryStartingPoints, BlueprintStartingPoints>();
+    }
 }

@@ -5,10 +5,10 @@ using Umbraco.Cms.Infrastructure.Persistence;
 namespace Heliograph.Umbraco.Stores;
 
 /// <summary>
-/// Dictionaries and their sample recipients kept in the Umbraco database. Heliograph reads dictionaries and does not
-/// edit them: whoever knows the data puts them here, through <see cref="SaveAsync"/> and <see cref="SaveSampleAsync"/>.
+/// Dictionaries and their sample recipients kept in the Umbraco database. Authors keep them from the workbench's
+/// Dictionaries screen, which checks each change before it reaches this store.
 /// </summary>
-public sealed class UmbracoDictionarySource(IUmbracoDatabaseFactory databases) : IDictionarySource
+public sealed class UmbracoDictionarySource(IUmbracoDatabaseFactory databases) : IDictionaryStore
 {
     public Task<IReadOnlyList<string>> ListAsync(CancellationToken cancellationToken = default)
     {
@@ -46,6 +46,18 @@ public sealed class UmbracoDictionarySource(IUmbracoDatabaseFactory databases) :
         }
 
         Write(name, sample, json);
+        return Task.CompletedTask;
+    }
+
+    /// <summary>Removes a sample recipient. The dictionary itself is never removed this way.</summary>
+    public Task DeleteSampleAsync(string name, string sample, CancellationToken cancellationToken = default)
+    {
+        if (!string.IsNullOrEmpty(sample))
+        {
+            using var db = databases.CreateDatabase();
+            db.Execute($"DELETE FROM {DictionaryRow.TableName} WHERE EntryKey = @0", EntryKey(name, sample));
+        }
+
         return Task.CompletedTask;
     }
 

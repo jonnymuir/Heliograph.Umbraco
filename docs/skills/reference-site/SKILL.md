@@ -52,7 +52,15 @@ developer's machine only. The backoffice only signs in over HTTPS.
    and press **Open in LibreOffice** (or **Open in Word** on the desktop). Change the letter, save
    it in your word processor, and come back to the backoffice: the workbench shows what is now
    wrong, if anything.
-6. **Change the letter.** In the backoffice, **Settings → Correspondence**, open the decision
+6. **Add a field.** In **Settings → Correspondence**, choose **decision-letter** under
+   **Dictionaries**, add a field (say *Contact phone*) and save. It is on the letter's **Tags** tab.
+   Remove *Event name* and save: the answer names each line of the letter that uses it. Put it
+   back.
+7. **Start a dictionary from the blueprint.** Press **New dictionary**, give it a name and choose
+   **Apply for a juggling event licence** under **Start from**. Every field the service collects
+   or calculates is there, named for an author and typed: dates as dates, *Dangerous props* as yes
+   or no because its answers are Yes and No.
+8. **Change the letter.** In the backoffice, **Settings → Correspondence**, open the decision
    letter, change the text message, preview it with a sample and publish it. The next application
    is sent version 2; requests already sent keep the version they were given.
 
