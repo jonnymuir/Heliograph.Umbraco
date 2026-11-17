@@ -13,6 +13,20 @@ installed, a service blueprint can send a letter at any stage of a journey.
 > Heliograph workbench, where authors write, check, preview and publish. See the
 > [architecture](https://github.com/jonnymuir/Heliograph/blob/main/docs/architecture.md).
 
+## Try it
+
+Clone the repo and press Run in VS Code (**C#: Aspire (Heliograph.Umbraco.ReferenceApp)**), or:
+
+```bash
+cd src/Heliograph.Umbraco.Client && npm install && npm run build && cd ../..
+dotnet run --project src/Heliograph.Umbraco.ReferenceApp
+```
+
+The reference site has Heliograph.Umbraco and Wayfinder.Umbraco together: apply for a licence,
+decide as the caseworker, and Heliograph sends the decision letter. The
+[reference site guide](https://github.com/jonnymuir/Heliograph.Umbraco/blob/main/docs/skills/reference-site/SKILL.md)
+walks through it and shows how the two are joined.
+
 ## Licence
 
 [MIT](https://github.com/jonnymuir/Heliograph.Umbraco/blob/main/LICENSE)

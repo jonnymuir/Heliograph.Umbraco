@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Sdk Name="Aspire.AppHost.Sdk" Version="13.6.5" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <UserSecretsId>aspire-Heliograph.Umbraco.AppHost</UserSecretsId>
+    <!-- Runs without the Aspire CLI bundle; its optional features aren't used here. -->
+    <NoWarn>$(NoWarn);ASPIRE010</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" />
+    <!-- Aspire still pulls MessagePack 2.5.302 (GHSA-qhrr-8q5h-9q3h); drop once it doesn't. -->
+    <PackageReference Include="MessagePack" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Heliograph.Umbraco.ReferenceApp/Heliograph.Umbraco.ReferenceApp.csproj" />
+  </ItemGroup>
+
+</Project>

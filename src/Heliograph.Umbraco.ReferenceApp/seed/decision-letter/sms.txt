@@ -1,0 +1,1 @@
+((if Licence approved))NJF: your licence for ((Event name)) is approved. Pay £((Licence fee)) by ((Fee due date)). Details are in your letter.((end if))((if Licence refused))NJF: we have made a decision on your licence application ((Application reference)). Please read the letter we have sent you.((end if))

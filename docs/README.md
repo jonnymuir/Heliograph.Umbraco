@@ -1,5 +1,7 @@
 # Documentation
 
+See also [skills](skills/README.md): guides people read and agents load.
+
 The design for this repo and the engine it hosts lives in one place, the Heliograph repo:
 
 | | |

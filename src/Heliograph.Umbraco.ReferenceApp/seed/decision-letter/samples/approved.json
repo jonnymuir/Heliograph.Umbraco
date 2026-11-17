@@ -1,0 +1,15 @@
+{
+  "applicantName": "Alex Applicant",
+  "applicantAddress": ["12 Tumble Lane", "Clubtown", "ZZ1 1ZZ"],
+  "applicationReference": "NJF-2026-004217",
+  "eventName": "Clubtown Summer Juggle",
+  "eventDate": "2027-06-19",
+  "numberOfJugglers": 24,
+  "letterDate": "2026-12-10",
+  "licenceApproved": true,
+  "licenceRefused": false,
+  "dangerousProps": false,
+  "licenceNumber": "JL-27-00381",
+  "licenceFee": 45,
+  "feeDueDate": "2027-01-09"
+}

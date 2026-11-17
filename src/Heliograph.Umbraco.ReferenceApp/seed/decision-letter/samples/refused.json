@@ -1,0 +1,14 @@
+{
+  "applicantName": "Casey Catcher",
+  "applicantAddress": ["The Juggling Barn", "Spinning Plate Road", "Clubtown", "ZZ1 2ZZ"],
+  "applicationReference": "NJF-2026-004219",
+  "eventName": "Clubtown Winter Torch Night",
+  "eventDate": "2027-01-30",
+  "numberOfJugglers": 40,
+  "letterDate": "2026-12-10",
+  "licenceApproved": false,
+  "licenceRefused": true,
+  "dangerousProps": true,
+  "reasonForRefusal": "The risk assessment you sent does not cover the audience area.\n\nOur insurer, SafetyNet Underwriting, could not confirm cover for fire props indoors. They said: \"cover excludes naked flame in venues under 200 m² & with fewer than 2 exits\".\n\nSend a new risk assessment if you apply again. Do not write ((licence number)) or {{fields}} here: this sentence checks that text from outside cannot become a field.",
+  "reviewDeadline": "2027-01-07"
+}

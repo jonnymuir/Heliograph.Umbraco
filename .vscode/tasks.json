@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Backoffice client: build",
+      "type": "shell",
+      "command": "npm install --no-audit --no-fund && npm run build",
+      "options": {
+        "cwd": "${workspaceFolder}/src/Heliograph.Umbraco.Client"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "dotnet: build ReferenceApp",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/src/Heliograph.Umbraco.ReferenceApp/Heliograph.Umbraco.ReferenceApp.csproj"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "dotnet: build AppHost",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "${workspaceFolder}/src/Heliograph.Umbraco.AppHost/Heliograph.Umbraco.AppHost.csproj"],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Reference site: prepare",
+      "dependsOn": ["Backoffice client: build", "dotnet: build ReferenceApp"],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "Reference site: prepare AppHost",
+      "dependsOn": ["Backoffice client: build", "dotnet: build AppHost"],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}
