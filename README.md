@@ -20,8 +20,8 @@ send a letter at any stage of a journey, but it does not need it.
 
 ![Settings → Correspondence in the Umbraco backoffice, with the decision letter open](https://raw.githubusercontent.com/jonnymuir/Heliograph.Umbraco/main/assets/screenshots/backoffice-correspondence.png)
 
-> **Status: early.** Prerelease. The package is not on nuget.org yet; run it from this repo. It
-> targets Umbraco 17 (LTS) only.
+> **Status: early.** Prereleases (`0.1.0-alpha.N`) are on nuget.org; expect changes between them.
+> It targets Umbraco 17 (LTS) only.
 
 ## Contents
 
@@ -127,8 +127,14 @@ All of this comes from installing the package. A site adds nothing to its `Progr
 
 ## Use it in your own site
 
-Until the package is published, reference the project from a clone of this repo. Building it
-needs the backoffice screen built first:
+Add the package to an Umbraco 17 site. Its composer wires everything, so nothing goes in
+`Program.cs`:
+
+```bash
+dotnet add package Heliograph.Umbraco --prerelease
+```
+
+To work on the package itself, build the backoffice screen before `dotnet build`:
 
 ```bash
 cd src/Heliograph.Umbraco.Client && npm install && npm run build
@@ -210,7 +216,7 @@ explains each piece.
 |---|---|
 | Umbraco | 17 (LTS). The package will not install on 18: a new Umbraco major is a deliberate move, not an automatic one |
 | .NET | 10 |
-| Heliograph | 0.1.0-alpha.3, from nuget.org |
+| Heliograph | 0.1.0-alpha.5, from nuget.org |
 | Wayfinder.Umbraco | Optional. 6.4 or later with Wayfinder 0.28, to send correspondence from a blueprint |
 | LibreOffice | Optional, on the server: PDFs and opening documents from the backoffice |
 
@@ -228,7 +234,9 @@ explains each piece.
 
 ## Not built yet
 
-- A published package on nuget.org and the Umbraco Marketplace.
+- A listing on the Umbraco Marketplace. The package carries the `umbraco-marketplace` tag, which
+  the Marketplace reads from nuget.org; the listing's own details come with the first stable
+  release.
 - An MCP endpoint in the backoffice, so an AI agent can work on correspondence by signing in as a
   backoffice user. Heliograph has the MCP server; the sign-in will be shared with Wayfinder.Umbraco.
 - Carrying correspondence between environments with uSync.

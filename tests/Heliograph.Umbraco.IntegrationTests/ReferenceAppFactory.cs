@@ -2,6 +2,8 @@ using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
+using Heliograph.Umbraco.ReferenceApp;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Heliograph.Umbraco.IntegrationTests;
@@ -39,6 +41,9 @@ public sealed class ReferenceAppFactory : WebApplicationFactory<Program>, IAsync
                 answered = response.StatusCode is HttpStatusCode.OK or HttpStatusCode.Redirect ? answered + 1 : 0;
                 if (answered >= 3)
                 {
+                    // The demo is seeded once Umbraco is running. Waiting here means a test never races it, and a
+                    // seed that fails stops every test with the seeder's own reason.
+                    await Services.GetRequiredService<ReferenceSeeder>().Seeded.WaitAsync(deadline - DateTime.UtcNow);
                     return;
                 }
             }
