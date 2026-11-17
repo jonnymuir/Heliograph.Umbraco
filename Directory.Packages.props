@@ -4,6 +4,10 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="AwesomeAssertions" Version="9.6.0" />
+    <!-- The Heliograph engine, its REST API and its workbench, as any site gets them. Prereleases until 0.1.0. -->
+    <PackageVersion Include="Heliograph" Version="0.1.0-alpha.2" />
+    <PackageVersion Include="Heliograph.Api" Version="0.1.0-alpha.2" />
+    <PackageVersion Include="Heliograph.Workbench" Version="0.1.0-alpha.2" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.13" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />

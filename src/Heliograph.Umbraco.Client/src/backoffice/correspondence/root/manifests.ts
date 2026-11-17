@@ -17,13 +17,13 @@ export const manifests = [
   },
   {
     type: 'workspaceView',
-    alias: 'Heliograph.WorkspaceView.CorrespondenceRoot.Overview',
-    name: 'Correspondence Root Overview Workspace View',
-    element: () => import('./heliograph-correspondence-overview.element.js'),
+    alias: 'Heliograph.WorkspaceView.CorrespondenceRoot.Workbench',
+    name: 'Correspondence Workbench Workspace View',
+    element: () => import('./heliograph-correspondence-workbench.element.js'),
     weight: 100,
     meta: {
       label: 'Correspondence',
-      pathname: 'overview',
+      pathname: 'workbench',
       icon: 'icon-message',
     },
     conditions: [

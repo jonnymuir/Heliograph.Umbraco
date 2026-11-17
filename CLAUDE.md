@@ -37,7 +37,7 @@ Follow them; this file adds only what is specific to this repo.
 
 | Project | Purpose |
 |---|---|
-| `src/Heliograph.Umbraco` | The publishable package. Its composer wires everything, so a site adds nothing to `Program.cs`: the Correspondence entry under Settings, and the `CorrespondenceAdmin` policy. Storage and the screens arrive with the engine's first prerelease. |
+| `src/Heliograph.Umbraco` | The publishable package. Its composer wires everything, so a site adds nothing to `Program.cs`: correspondence and dictionaries in the Umbraco database (`Stores/`, `Persistence/`), the authoring API from `Heliograph.Api` at `/heliograph/api`, the Correspondence entry under Settings hosting the workbench from `Heliograph.Workbench`, and the `CorrespondenceAdmin` policy. |
 | `src/Heliograph.Umbraco.Client` | The backoffice client (TypeScript, Lit, Vite). Built into `src/Heliograph.Umbraco/wwwroot/dist`, which is not committed, and packed as static web assets. |
 | `src/Heliograph.Umbraco.ReferenceApp` | An Umbraco 17 site with the package installed. Proves it in a real site and is what the booted-site tests start. Never ships. |
 | `tests/Heliograph.Umbraco.Tests` | Fast behavioural tests, no site started (xUnit, AwesomeAssertions, Moq for Umbraco's interfaces). |

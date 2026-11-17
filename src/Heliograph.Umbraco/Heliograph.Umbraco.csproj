@@ -23,6 +23,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Heliograph" />
+    <PackageReference Include="Heliograph.Api" />
+    <PackageReference Include="Heliograph.Workbench" />
     <PackageReference Include="Umbraco.Cms.Api.Management" />
     <PackageReference Include="Umbraco.Cms.Core" />
     <PackageReference Include="Umbraco.Cms.Web.Common" />
