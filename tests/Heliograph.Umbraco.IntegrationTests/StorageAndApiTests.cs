@@ -56,6 +56,18 @@ public class StorageAndApiTests(ReferenceAppFactory site)
     }
 
     [Fact]
+    public async Task A_word_processor_with_a_made_up_link_is_refused_and_one_without_a_sign_in_gets_no_link()
+    {
+        using var client = site.CreateClient();
+
+        var forged = await client.GetAsync(new Uri("/heliograph/webdav/not-a-real-token/letter.docx", UriKind.Relative));
+        var link = await client.PostAsync(new Uri("/heliograph/api/correspondence/decision-letter/document/edit-link", UriKind.Relative), null);
+
+        forged.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        link.StatusCode.Should().BeOneOf(HttpStatusCode.Unauthorized, HttpStatusCode.Forbidden);
+    }
+
+    [Fact]
     public async Task The_workbench_the_backoffice_loads_is_served()
     {
         using var client = site.CreateClient();
