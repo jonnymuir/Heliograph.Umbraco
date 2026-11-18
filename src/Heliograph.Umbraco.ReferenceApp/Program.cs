@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 using Heliograph.Documents;
-using Heliograph.Pdf.LibreOffice;
+using Heliograph.Pdf;
 using Heliograph.Umbraco.ReferenceApp;
 using Wayfinder.Engine.Abstractions;
 
@@ -28,7 +28,7 @@ if (string.IsNullOrEmpty(builder.Configuration["Umbraco:CMS:Global:Smtp:Host"]))
 // Heliograph.Umbraco and Wayfinder.Umbraco's starter wire themselves through their composers. This site adds the join
 // between them (the "heliograph" support system), a route to PDF, and its demo content.
 builder.Services.AddSingleton<ISupportSystemClient, HeliographSupportSystemClient>();
-builder.Services.AddSingleton<IPdfConverter, LibreOfficePdfConverter>();
+builder.Services.AddSingleton<IPdfConverter, HeliographPdfConverter>(); // or LibreOfficePdfConverter, from Heliograph.Pdf.LibreOffice
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()

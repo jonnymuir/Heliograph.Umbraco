@@ -17,8 +17,8 @@
          gets 0.28, which lets a support-system call give the correspondence's key as a fixed value. -->
     <PackageReference Include="Wayfinder.Umbraco.Starter" />
     <PackageReference Include="Wayfinder.Engine" />
-    <!-- One route to PDF, so the decision letter is attached to its email as a PDF where LibreOffice is installed. -->
-    <PackageReference Include="Heliograph.Pdf.LibreOffice" />
+    <!-- Heliograph's own route to PDF, in .NET alone, so the decision letter is attached to its email as a PDF anywhere. -->
+    <PackageReference Include="Heliograph.Pdf" />
   </ItemGroup>
 
   <ItemGroup>

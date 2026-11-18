@@ -15,8 +15,10 @@ It never ships. It installs itself into its own SQLite database on first start. 
 
 ## Run it
 
-You need the .NET 10 SDK and Node.js 20 or later. LibreOffice is optional; with it, the letter is
-attached to the email as a PDF. Docker is needed only for the Aspire host's mailbox.
+You need the .NET 10 SDK and Node.js 20 or later. The letter is attached to the email as a PDF,
+made by Heliograph's own converter with nothing installed. LibreOffice is optional; with it, you
+can open the letter from the backoffice to edit it. Docker is needed only for the Aspire host's
+mailbox.
 
 | How | What to do |
 |---|---|
