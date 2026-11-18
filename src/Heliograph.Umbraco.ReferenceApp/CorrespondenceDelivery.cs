@@ -9,7 +9,7 @@ internal sealed record Delivery(string InstanceId, string Correspondence, string
 
 /// <summary>
 /// Delivery, which is always the host's job: the email through Umbraco's mail settings, with the letter attached as a
-/// PDF when LibreOffice is installed; the letter and the text message written to the outbox folder.
+/// PDF; the letter and the text message written to the outbox folder.
 /// </summary>
 internal static class CorrespondenceDelivery
 {
@@ -50,7 +50,8 @@ internal static class CorrespondenceDelivery
         }
         catch (PdfConversionException)
         {
-            // No LibreOffice on this machine: the letter goes as a Word document only.
+            // The route to PDF could not make this letter (LibreOffice missing, if a site uses that route): it goes as a Word
+            // document only.
             return null;
         }
     }

@@ -49,7 +49,7 @@ SQLite database, created on first start.
 | .NET 10 SDK | Required |
 | Node.js 20 or later | Required: builds the backoffice screen |
 | Docker | Only for the Aspire option, which runs a local mailbox |
-| LibreOffice | Optional: with it, letters are also made as PDFs and can be edited from the backoffice |
+| LibreOffice | Optional: with it, letters can be edited from the backoffice. PDFs are made without it |
 
 ### Start it
 
@@ -197,8 +197,12 @@ else
 }
 ```
 
-For a PDF, register Heliograph's LibreOffice converter (`Heliograph.Pdf.LibreOffice`) and pass
-the Word document to it.
+For a PDF, register Heliograph's own converter (`Heliograph.Pdf`) as the `IPdfConverter` and pass
+the Word document to it. It needs nothing installed, so it runs anywhere .NET runs, an Azure App
+Service included. Registered, it also checks every template as it is saved and published, and
+refuses with the place and a fix what it cannot lay out yet. For a template that needs more,
+register `LibreOfficePdfConverter` from `Heliograph.Pdf.LibreOffice` instead, with LibreOffice
+installed on the server.
 
 ## With Wayfinder
 
@@ -216,9 +220,9 @@ explains each piece.
 |---|---|
 | Umbraco | 17 (LTS). The package will not install on 18: a new Umbraco major is a deliberate move, not an automatic one |
 | .NET | 10 |
-| Heliograph | 0.1.0-alpha.6, from nuget.org |
+| Heliograph | 0.1.0-alpha.8, from nuget.org |
 | Wayfinder.Umbraco | Optional. 6.4 or later with Wayfinder 0.28, to send correspondence from a blueprint |
-| LibreOffice | Optional, on the server: PDFs and opening documents from the backoffice |
+| LibreOffice | Optional, on the server: opening documents from the backoffice, and PDFs if a site prefers it to Heliograph's own converter |
 
 ## Security
 
