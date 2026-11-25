@@ -13,7 +13,7 @@
          restore instead of assemblies built for this one loading against an API they were never tested on. Moving
          to a new major means changing UmbracoMajor and UmbracoVersion together and running every suite. -->
     <UmbracoMajor>17</UmbracoMajor>
-    <UmbracoVersion>17.8.0</UmbracoVersion>
+    <UmbracoVersion>17.8.2</UmbracoVersion>
     <UmbracoPackageRange>[$(UmbracoVersion), $([MSBuild]::Add($(UmbracoMajor), 1)).0.0)</UmbracoPackageRange>
   </PropertyGroup>
   <ItemGroup>
